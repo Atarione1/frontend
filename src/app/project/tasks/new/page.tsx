@@ -49,7 +49,7 @@ const CreateProyect = () => {
           name,
           description,
           finishedAt: "2025-05-06T17:43:24.585Z",
-          userId: parseInt(user, 10),
+          userId: parseInt(newUser, 10),
           projectId: parseInt(newproject, 10),
 
         }),

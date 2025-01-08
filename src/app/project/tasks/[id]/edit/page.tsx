@@ -11,6 +11,7 @@ const EditarProyect = ({ params }: Props) => {
   const [name, setName] = useState<string>("");
   const [users, setUsers] = useState<[]>([]);
   const [user, setUser] = useState<string>("");
+  const [project, setProject] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [task, setTask] = useState<Task>()
   const { data: session, status } = useSession();
@@ -29,8 +30,12 @@ const EditarProyect = ({ params }: Props) => {
   async function getPage() {
     const taskss = await getTask(session, params?.id)
     const userr = await getUsers(session)
+    setName(taskss.name)
+    setDescription(taskss.description)
     setUsers(userr)
+    setUser(taskss.userId)
     setTask(taskss)
+    setProject(taskss.projectId)
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,6 +53,7 @@ const EditarProyect = ({ params }: Props) => {
           description,
           finishedAt: "2025-05-06T17:43:24.585Z",
           userId: parseInt(user, 10),
+          projectId:project
         }),
       }
     );
@@ -74,7 +80,7 @@ const EditarProyect = ({ params }: Props) => {
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la Tarea</label>
                   <input
                     type="text"
-                    placeholder={task?.name}
+                    defaultValue={task?.name}
                     name="name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={(event) => setName(event.target.value)} />
@@ -83,7 +89,7 @@ const EditarProyect = ({ params }: Props) => {
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion</label>
                   <textarea
-                    placeholder={task?.description}
+                    defaultValue={task?.description}
                     name="description"
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={(event) => setDescription(event.target.value)}
@@ -94,7 +100,7 @@ const EditarProyect = ({ params }: Props) => {
                 <select onChange={(event) => setUser(event.target.value)} name="user" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   {users.map((user: any, i) => (
                     <>
-                      <option key={i} value={user.id}>{user.name} </option>
+                      <option  key={i} value={user.id}>{user.name} </option>
                     </>
 
                   ))}

@@ -41,6 +41,7 @@ const Project = ({ params }: Props) => {
     const addmin = await getAdmin(session)
     const project = await getProject(session, params?.id)
      const userr = await getUserr(session)
+     const taskss = await getTask(session, newTask)
     setAdmin(addmin)
     setProject(project)
     setUser(userr)
